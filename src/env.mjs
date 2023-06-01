@@ -9,6 +9,10 @@ export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
     NODE_ENV: z.enum(["development", "test", "production"]),
+    ESI_CLIENT_ID: z.string(),
+    ESI_SECRET_KEY: z.string(),
+    ESI_SCOPE: z.string(),
+    ESI_CALLBACK_URL: z.string(),
   },
 
   /**
@@ -18,6 +22,7 @@ export const env = createEnv({
    */
   client: {
     // NEXT_PUBLIC_CLIENTVAR: z.string().min(1),
+    
   },
 
   /**
@@ -27,6 +32,10 @@ export const env = createEnv({
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
+    ESI_CLIENT_ID: process.env.ESI_CLIENT_ID,
+    ESI_SECRET_KEY: process.env.ESI_SECRET_KEY,
+    ESI_SCOPE: process.env.ESI_SCOPE,
+    ESI_CALLBACK_URL: process.env.ESI_CALLBACK_URL,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
