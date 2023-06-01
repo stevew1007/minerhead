@@ -1,5 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
+import Image from "next/image";
 import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
@@ -26,7 +27,7 @@ const Home: NextPage = () => {
       </Head>
       <main className="flex min-h-screen flex-col items-center justify-center">
         <a href={authURL}>
-          <img
+          <Image
             src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-white-small.png"
             alt="EVE SSO Login Buttons Small White"
           />

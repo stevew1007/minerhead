@@ -56,7 +56,7 @@ export const esiRouter = createTRPCRouter({
         greeting: `Hello ${input.text}`,
       };
     }),
-  startOAuth: publicProcedure.query(({ ctx }) => {}),
+  // startOAuth: publicProcedure.query(({ ctx }) => {}),
   getAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.example.findMany();
   }),
