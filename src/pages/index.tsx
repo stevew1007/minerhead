@@ -13,7 +13,7 @@ const Home: NextPage = () => {
   }
   const { url: authURL, state: state } = data;
 
-  // console.log("authURL::: ", authURL);
+  console.log("authURL::: ", authURL);
   // console.log("state::: ", state);
 
   localStorage.setItem("state", state);
