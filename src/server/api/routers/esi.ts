@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import type { Account } from "@prisma/client";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import crypto from "crypto";
 import { encode } from "js-base64";
@@ -21,7 +22,7 @@ export const esiRouter = createTRPCRouter({
 
     const encodedCallbackURL = encodeURIComponent(callbackURL);
     console.log("encodedCallbackURL::: ", encodedCallbackURL);
-    const encodedScope = encodeURIComponent(scope);
+    // const encodedScope = encodeURIComponent(scope);
 
     // Generate a unique state value
     const state = crypto.randomBytes(16).toString("hex");
@@ -29,9 +30,9 @@ export const esiRouter = createTRPCRouter({
     // Construct the URL
     const url = new URL("https://login.eveonline.com/v2/oauth/authorize/");
     url.searchParams.append("response_type", "code");
-    url.searchParams.append("redirect_uri", encodedCallbackURL);
+    url.searchParams.append("redirect_uri", callbackURL);
     url.searchParams.append("client_id", clientId);
-    url.searchParams.append("scope", encodedScope);
+    url.searchParams.append("scope", scope);
     url.searchParams.append("state", state);
 
     return { url: url.href, state };
@@ -49,15 +50,17 @@ export const esiRouter = createTRPCRouter({
     }
     return { code: encode(clientId + ":" + secretKey) };
   }),
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
+  new: publicProcedure
+    .input(z.object({ accessToken: z.string(), refreshToken: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const { accessToken, refreshToken } = input;
+
+      const account = await ctx.prisma.account.create({
+        data: {
+          accessToken,
+          refreshToken,
+        },
+      });
+      return account;
     }),
-  // startOAuth: publicProcedure.query(({ ctx }) => {}),
-  getAll: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.example.findMany();
-  }),
 });

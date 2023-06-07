@@ -13,8 +13,8 @@ const Home: NextPage = () => {
   }
   const { url: authURL, state: state } = data;
 
-  console.log("authURL::: ", authURL);
-  console.log("state::: ", state);
+  // console.log("authURL::: ", authURL);
+  // console.log("state::: ", state);
 
   localStorage.setItem("state", state);
 
@@ -28,8 +28,10 @@ const Home: NextPage = () => {
       <main className="flex min-h-screen flex-col items-center justify-center">
         <a href={authURL}>
           <Image
-            src="https://web.ccpgamescdn.com/eveonlineassets/developers/eve-sso-login-white-small.png"
+            src="/eve-sso-login-white-small.png"
             alt="EVE SSO Login Buttons Small White"
+            width={195}
+            height={30}
           />
         </a>
       </main>
