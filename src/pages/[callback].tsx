@@ -4,18 +4,19 @@ import { api } from "~/utils/api";
 
 const CallbackPage = () => {
   const router = useRouter();
-
+  const { data } = api.esi.loginEncode.useQuery();
+  const { mutate } = api.esi.new.useMutation({
+    onSuccess: () => {
+      console.log("Access code registered.");
+    },
+    onError: () => {
+      console.log("Database Error");
+    },
+  });
   const handleAuth = async (code: string) => {
     const url = `https://login.eveonline.com/v2/oauth/token?grant_type=authorization_code&code=${code}`;
-    const { data } = api.esi.loginEncode.useQuery();
-    const { mutate } = api.esi.new.useMutation({
-      onSuccess: () => {
-        console.log("Access code registered.");
-      },
-      onError: () => {
-        console.log("Database Error");
-      },
-    });
+    console.log("url::: ", url);
+
     if (!data) {
       return {
         code: 500,
@@ -34,6 +35,7 @@ const CallbackPage = () => {
     let response;
     try {
       response = await fetch(url, option);
+      console.log("response::: ", response.body);
     } catch (error) {
       response = {
         ok: false,
@@ -55,9 +57,15 @@ const CallbackPage = () => {
   useEffect(() => {
     const { code, state } = router.query;
 
-    if (state !== localStorage.getItem("state")) {
-      return;
-    }
+    console.log("code::: ", code);
+    console.log("state::: ", state);
+    // console.log(
+    //   'state !== localStorage.getItem("state")::: ',
+    //   state !== localStorage.getItem("state")
+    // );
+    // if (state !== localStorage.getItem("state")) {
+    //   return;
+    // }
 
     if (typeof code === "string") {
       void handleAuth(code);

@@ -20,8 +20,8 @@ export const esiRouter = createTRPCRouter({
       });
     }
 
-    const encodedCallbackURL = encodeURIComponent(callbackURL);
-    console.log("encodedCallbackURL::: ", encodedCallbackURL);
+    // const encodedCallbackURL = encodeURIComponent(callbackURL);
+    // console.log("encodedCallbackURL::: ", encodedCallbackURL);
     // const encodedScope = encodeURIComponent(scope);
 
     // Generate a unique state value
